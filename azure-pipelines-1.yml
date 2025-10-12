@@ -5,7 +5,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  target_path: /var/www/html   # Apache web root on EC2
+  target_path: /var/www/html/Assets   # Apache web root on EC2
   ec2_user: ubuntu             # default EC2 user
   ec2_host: 3.107.19.78       # your EC2 public IP
 
