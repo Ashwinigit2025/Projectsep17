@@ -25,7 +25,7 @@ variables:
       targetType: 'inline'
       script: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-3.107.19.78.ap-southeast-2.compute.amazonaws.com "
-        mkdir -p /var/www/html/backend/dev && sudo chmod -R 777 /var/www/html/backend/dev"
+        mkdir -p /var/www/html/front && sudo chmod -R 777 /var/www/html/front"
     displayName: 'Create destination directory if missing'
 
   - task: Bash@3
@@ -44,7 +44,7 @@ variables:
           --exclude='vendor' \
           --exclude='storage' \
           -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa" \
-          ./ ubuntu@ec2-15-207-228-146.ap-south-1.compute.amazonaws.com:/var/www/html/backend/dev \
+          ./ ubuntu@ec2-15-207-228-146.ap-south-1.compute.amazonaws.com:/var/www/html/front \
           || echo "⚠️ Rsync completed with warnings (code 23), but main files were transferred."
 
         echo "✅ Rsync completed."
@@ -56,8 +56,8 @@ variables:
     inputs:
       targetType: 'inline'
       script: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-15-207-228-146.ap-south-1.compute.amazonaws.com <<'ENDSSH'
-        cd /var/www/html/backend/dev
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@ec2-3.107.19.78.ap-southeast-2.compute.amazonaws.com <<'ENDSSH'
+        cd /var/www/html/front
         composer install
         php artisan tenants:migrate
         php artisan tenants:seed
